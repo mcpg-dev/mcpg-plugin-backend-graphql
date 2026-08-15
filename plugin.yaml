@@ -1,0 +1,19 @@
+schema: mcpg.dev/plugin/v1
+id: dev.mcpg.backend.graphql
+name: GraphQL Binding
+license: Apache-2.0
+description: |
+  Dispatches tool calls as GraphQL-over-HTTP POSTs against an
+  operator-configured endpoint. The call arguments become the GraphQL
+  `variables`; the operator-configured `operation` is the `query`.
+  Async via reqwest through the shared net-core core; the DNS rebinding
+  guard rejects private/loopback resolved addresses unless explicitly
+  opted in. Per-caller `cred://` references in url + header values
+  resolve through the gateway's credential cache at dispatch time, with
+  an internal ClientRegistry caching one `reqwest::Client` per
+  resolved-credential digest. A GraphQL response carrying a non-empty
+  `errors` array is surfaced as a tool-level error.
+class: backend
+runtime: native-cdylib-v1
+protocol_version: "1.0"
+required_capabilities: [network_outbound]
